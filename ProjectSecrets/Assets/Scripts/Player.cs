@@ -699,7 +699,7 @@ public class Player : MonoBehaviour
             SetControls("Player");
         }
         damageTaken += damage;
-        int currentHealth = (int)(health - .0001f);
+        int currentHealth = (int)(health - .00001f);
         health -= damage;
         if (health > 0 && (damage == 1 || currentHealth != (int)health))
             playerAudio.LostLife();
