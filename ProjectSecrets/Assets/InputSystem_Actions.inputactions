@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Help",
+                    "type": "Button",
+                    "id": "1791ec63-2489-4dc2-8309-56dc93c2f988",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -305,8 +314,8 @@
                 },
                 {
                     "name": "",
-                    "id": "104e9a9a-26f8-462b-af14-42ed7358e42d",
-                    "path": "<Keyboard>/escape",
+                    "id": "1e0f0abd-dc0f-489a-accd-e988b9af30b7",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -316,12 +325,34 @@
                 },
                 {
                     "name": "",
-                    "id": "1e0f0abd-dc0f-489a-accd-e988b9af30b7",
-                    "path": "<Gamepad>/start",
+                    "id": "ed49ecda-5b7f-4b4a-8657-43318a4a8776",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "414d1b75-006a-4519-bd6b-f0268e94ee65",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Help",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a8aad98-7c22-4571-93c5-fec6a1bbd463",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Help",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1237,7 +1268,7 @@
                 },
                 {
                     "name": "",
-                    "id": "c18873a4-9b4d-4a18-a922-e09cf62d285b",
+                    "id": "04ea8aca-6d42-46da-8b9f-13b75260ef97",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

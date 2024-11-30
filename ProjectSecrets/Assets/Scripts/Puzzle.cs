@@ -77,5 +77,6 @@ public class Puzzle : MonoBehaviour
         Destroy(pickupObject);
         transform.parent = portalPad.transform;
         portalPad.ShowArrowButtons();
+        portalPad.player.padHelp.SetActive(true);
     }
 }

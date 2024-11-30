@@ -80,6 +80,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Help"",
+                    ""type"": ""Button"",
+                    ""id"": ""1791ec63-2489-4dc2-8309-56dc93c2f988"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -327,8 +336,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""104e9a9a-26f8-462b-af14-42ed7358e42d"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""1e0f0abd-dc0f-489a-accd-e988b9af30b7"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -338,12 +347,34 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1e0f0abd-dc0f-489a-accd-e988b9af30b7"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""id"": ""ed49ecda-5b7f-4b4a-8657-43318a4a8776"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""414d1b75-006a-4519-bd6b-f0268e94ee65"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Help"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a8aad98-7c22-4571-93c5-fec6a1bbd463"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Help"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1259,7 +1290,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c18873a4-9b4d-4a18-a922-e09cf62d285b"",
+                    ""id"": ""04ea8aca-6d42-46da-8b9f-13b75260ef97"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1844,6 +1875,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Grapple = m_Player.FindAction("Grapple", throwIfNotFound: true);
         m_Player_PortalPad = m_Player.FindAction("PortalPad", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Help = m_Player.FindAction("Help", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1957,6 +1989,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Grapple;
     private readonly InputAction m_Player_PortalPad;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Help;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1967,6 +2000,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Grapple => m_Wrapper.m_Player_Grapple;
         public InputAction @PortalPad => m_Wrapper.m_Player_PortalPad;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Help => m_Wrapper.m_Player_Help;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1994,6 +2028,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Help.started += instance.OnHelp;
+            @Help.performed += instance.OnHelp;
+            @Help.canceled += instance.OnHelp;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -2016,6 +2053,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Help.started -= instance.OnHelp;
+            @Help.performed -= instance.OnHelp;
+            @Help.canceled -= instance.OnHelp;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -2456,6 +2496,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnGrapple(InputAction.CallbackContext context);
         void OnPortalPad(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnHelp(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

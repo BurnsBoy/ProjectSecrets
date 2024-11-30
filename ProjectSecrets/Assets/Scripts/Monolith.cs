@@ -20,11 +20,17 @@ public class Monolith : MonoBehaviour
     public GameObject blueBattery;
 
     int answer;
+
+    bool activated;
+
+    public AudioSource audioSource;
     private void OnTriggerEnter(Collider other)
     {
         Player player = other.GetComponent<Player>();
-        if (player != null)
+        if (!activated && player != null)
         {
+            audioSource.PlayOneShot(audioSource.clip);
+            activated = true;
             matrix = player.portalPad.TranslateIntToMatrix(player.portalPad.portalDestinations.FirstOrDefault(x => x.Value == "Home").Key);
             if (player.hasRedBattery)
             {

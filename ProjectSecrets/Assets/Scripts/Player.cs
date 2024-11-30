@@ -45,6 +45,8 @@ public class Player : MonoBehaviour
     bool paused;
     float lavaTimer;
     int lavaBounces;
+    float damageTimer;
+    bool hasMoved;
 
     //Tools
     public bool hasJetpack;
@@ -106,6 +108,9 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI jumpText;
     public Image[] grappleHookHelp;
     public TextMeshProUGUI grappleText;
+    public GameObject padHelp;
+    public GameObject helpMenu;
+    public TextMeshProUGUI helpText;
 
 
     //Progression
@@ -268,7 +273,7 @@ public class Player : MonoBehaviour
 
     void Heal()
     {
-        if (health != Math.Floor(health))
+        if (damageTimer <= 0 && health != Math.Floor(health))
         {
             int targetHealth = (int)Math.Floor(health + 1);
             health += Time.deltaTime * healSpeed;
@@ -360,6 +365,10 @@ public class Player : MonoBehaviour
         if (lavaTimer > 0)
         {
             lavaTimer -= Time.deltaTime;
+        }
+        if (damageTimer > 0)
+        {
+            damageTimer -= Time.deltaTime; 
         }
     }
 
@@ -561,6 +570,18 @@ public class Player : MonoBehaviour
         playerBody.linearVelocity -= baseVelocity;
         float verticalVelocity = Vector3.Dot(transform.up, playerBody.linearVelocity);
         Vector2 moveInput = controls.Player.Move.ReadValue<Vector2>();
+        if (!hasMoved && moveInput.magnitude > 0)
+        {
+            hasMoved = true;
+            foreach (GameObject help in mouseKeyboardHelp)
+            {
+                help.SetActive(Gamepad.all.Count == 0);
+            }
+            foreach (GameObject help in controllerHelp)
+            {
+                help.SetActive(Gamepad.all.Count != 0);
+            }
+        }
         if (moveInput.magnitude != 0)
         {
             float vectorSpeed = speed * moveInput.magnitude;
@@ -672,6 +693,7 @@ public class Player : MonoBehaviour
 
     void TakeDamage(float damage)
     {
+        damageTimer = 2;
         if (portalPad.input.enabled)
         {
             SetControls("Player");
@@ -771,7 +793,7 @@ public class Player : MonoBehaviour
                 lavaTimer = .5f;
                 playerAudio.LavaSizzle();
                 animator.Play("Burnt");
-                TakeDamage(.5f);
+                TakeDamage(.4f);
             }
         }
     }
@@ -853,6 +875,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnHelp()
+    {
+        helpMenu.SetActive(!helpMenu.activeInHierarchy);
+        helpText.text = helpMenu.activeInHierarchy ? "Hide Help" : "Help";
+    }
+
     void JumpHelp(string textVerbage)
     {
         jumpText.text = textVerbage;
@@ -899,7 +927,7 @@ public class Player : MonoBehaviour
         {
             takingDamage = true;
             if (!cameraFades.fading)
-                TakeDamage(Time.deltaTime * .30f);
+                TakeDamage(Time.deltaTime * .2f);
         }
     }
 
